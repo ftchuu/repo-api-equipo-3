@@ -1,20 +1,32 @@
-import xmlrpc.client
-from config import *
+from core.odoo import get_odoo_connection, ODOO_DB, ODOO_PASSWORD
+from fastapi import HTTPException
 
-def get_products():
-    common = xmlrpc.client.ServerProxy(f"{ODOO_URL}/xmlrpc/2/common")
-    uid = common.authenticate(ODOO_DB, ODOO_USERNAME, ODOO_PASSWORD, {})
 
-    models = xmlrpc.client.ServerProxy(f"{ODOO_URL}/xmlrpc/2/object")
+def obtener_productos():
+	uid, models = get_odoo_connection()
 
-    products = models.execute_kw(
-        ODOO_DB, uid, ODOO_PASSWORD,
-        'product.product',
-        'search_read',
-        [[]],
-        {
-            'fields': ['id', 'name', 'list_price']
-        }
-    )
+	try:
+		productos = models.execute_kw(
+			ODOO_DB, uid, ODOO_PASSWORD,
+			"product.product", "search_read",
+			[[]],
+			{
+				"fields": ["id", "name", "default_code", "list_price", "type", "categ_id"],
+				"order": "name"
+			}
+		)
 
-    return products
+		# Normalizar datos para que coincidan con los esquemas Pydantic
+		for prod in productos:
+			# Algunos registros pueden tener `default_code` como False; convertir a None
+			dc = prod.get("default_code")
+			if dc is False:
+				prod["default_code"] = None
+			elif dc is not None and not isinstance(dc, str):
+				prod["default_code"] = str(dc)
+
+		return {"total": len(productos), "data": productos}
+
+	except Exception as e:
+		raise HTTPException(status_code=500, detail=str(e))
+
