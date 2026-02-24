@@ -12,7 +12,7 @@ def obtener_ordenes_service():
                 id=orden.get("id"),
                 id_customer=orden.get("id_customer"),
                 total_paid=orden.get("total_paid"),
-                current_state=orden.get("current_state"),
+                current_state=str(orden.get("current_state")) if orden.get("current_state") is not None else None,
                 date_add=orden.get("date_add"),
             )
         )
