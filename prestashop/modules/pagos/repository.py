@@ -4,7 +4,7 @@ from fastapi import HTTPException
 def obtener_pagos():
     try:
         data = prestashop_get("order_payments")
-        pagos = data.get("order_payments", [])
+        pagos = data if isinstance(data, list) else data.get("order_payments", [])
 
         resultado = []
         for pago in pagos:
