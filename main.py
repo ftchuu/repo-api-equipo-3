@@ -11,6 +11,8 @@ from modules.ordenes.routes import router as ordenes_router
 from prestashop.modules.clientes.routes import router as clientes_router
 from prestashop.modules.productos.routes import router as prestashop_productos_router
 from prestashop.modules.proveedores.routes import router as proveedores_prestashop_router
+from prestashop.modules.ordenes.routes import router as prestashop_ordenes_router
+
 
 app = FastAPI(title="API")
 
@@ -28,3 +30,4 @@ app.include_router(clientes_router, prefix="/prestashop/clientes", tags=["Client
 app.include_router(prestashop_productos_router, prefix="/api/prestashop/productos", tags=["Productos"])
 
 app.include_router(proveedores_prestashop_router, prefix="/api/prestashop/proveedores", tags=["PrestaShop Proveedores"])
+app.include_router(prestashop_ordenes_router, prefix="/api/prestashop/ordenes", tags=["PrestaShop Ordenes"])
