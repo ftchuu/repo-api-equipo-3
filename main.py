@@ -26,4 +26,5 @@ app.include_router(ordenes_router, prefix="/ordenes", tags=["Ordenes"])
 
 app.include_router(clientes_router, prefix="/prestashop/clientes", tags=["Clientes"])
 app.include_router(prestashop_productos_router, prefix="/api/prestashop/productos", tags=["Productos"])
+
 app.include_router(proveedores_prestashop_router, prefix="/api/prestashop/proveedores", tags=["PrestaShop Proveedores"])
