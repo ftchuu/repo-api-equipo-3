@@ -2,7 +2,7 @@ import requests
 from fastapi import HTTPException
 
 BASE_URL = "http://localhost:8080/api"
-API_KEY = "TU_API_KEY_AQUI"  # Reemplaza con tu API Key de PrestaShop
+API_KEY = "5CBDJD9A6EVGMWVM4SVPPQW6VD3LGHMR"  # Reemplaza con tu API Key de PrestaShop
 
 
 def prestashop_get(endpoint: str):
@@ -22,7 +22,7 @@ def prestashop_get(endpoint: str):
     
     except requests.exceptions.ConnectionError:
         raise HTTPException(status_code=503, detail="No se pudo conectar a PrestaShop")
-    
+        
     except requests.exceptions.Timeout:
         raise HTTPException(status_code=504, detail="Tiempo de espera agotado al conectar con PrestaShop")
 
