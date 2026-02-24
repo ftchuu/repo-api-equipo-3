@@ -2,7 +2,7 @@ import requests
 from fastapi import HTTPException
 
 BASE_URL = "http://localhost:8080/api"
-API_KEY = "5CBDJD9A6EVGMWVM4SVPPQW6VD3LGHMR"  # Reemplaza con tu API Key de PrestaShop
+API_KEY = "TU_API_KEY"  # Reemplaza con tu API Key de PrestaShop
 
 
 def prestashop_get(endpoint: str):
