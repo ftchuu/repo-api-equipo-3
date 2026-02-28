@@ -15,6 +15,7 @@ from prestashop.modules.orden_referencia.routes import router as orden_ref_route
 from prestashop.modules.pagos.routes import router as pagos_prestashop_router
 from prestashop.modules.ordenes.routes import router as prestashop_ordenes_router
 from prestashop.modules.productos_reference.routes import router as productos_ref_router
+from prestashop.modules.actualizar_productos.routes import router as actualizar_productos_router
 
 
 app = FastAPI(title="API")
@@ -37,3 +38,4 @@ app.include_router(orden_ref_router, prefix="/api/prestashop/orden-referencia", 
 app.include_router(pagos_prestashop_router, prefix="/api/prestashop/pagos", tags=["PrestaShop Pagos"])
 app.include_router(proveedores_prestashop_router, prefix="/api/prestashop/proveedores", tags=["PrestaShop Proveedores"])
 app.include_router(prestashop_ordenes_router, prefix="/api/prestashop/ordenes", tags=["PrestaShop Ordenes"])
+app.include_router(actualizar_productos_router, prefix="/api/prestashop/actualizar-productos", tags=["Actualizar Productos"])
