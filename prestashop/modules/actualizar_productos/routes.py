@@ -13,7 +13,7 @@ def actualizar_producto(data: ProductoActualizar):
             raise HTTPException(status_code=404, detail="Producto no encontrado")
 
         # 2. Obtener el XML actual del producto
-        xml_data = ProductoActualizable.get_product_xml(product_id)
+        xml_data = ProductoActualizable.get_product(product_id)
 
         # 3. Modificar el XML con los nuevos datos
         updated_xml = ProductoActualizable.update_product_data(
@@ -31,8 +31,4 @@ def actualizar_producto(data: ProductoActualizar):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
-@router.get("/test")
-def test():
-    return ProductoActualizable.get_product_id("NHD-0001")
     
