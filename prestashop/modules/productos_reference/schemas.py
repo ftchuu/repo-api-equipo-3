@@ -12,3 +12,8 @@ class Producto(BaseModel):
 
 class ProductoReferencia(BaseModel):
     reference: str
+
+
+class ProductosMasivos(BaseModel):
+    total: int
+    data: list[Producto]  # lista de productos creados/actualizados durante la operación

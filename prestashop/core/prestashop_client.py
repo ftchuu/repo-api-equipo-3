@@ -9,7 +9,7 @@ if not base.endswith("/api"):
     base = f"{base}/api"
 BASE_URL = base
 
-API_KEY = os.getenv("PRESTASHOP_API_KEY", "5CBDJD9A6EVGMWVM4SVPPQW6VD3LGHMR")
+API_KEY = os.getenv("PRESTASHOP_API_KEY", "U658XXUZ9CQC2JFNUDGSN4WGP7C81UQE")
 if not API_KEY:
     # no usamos HTTPException aquí porque esto ocurre durante la carga del
     # módulo y queremos que la aplicación falle rápido.
