@@ -231,3 +231,47 @@ def crear_producto_por_referencia(reference: str):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+def crear_productos_masivamente():
+   
+    uid, models = get_odoo_connection()
+    try:
+        productos_odoo = models.execute_kw(
+            ODOO_DB,
+            uid,
+            ODOO_PASSWORD,
+            "product.product",
+            "search_read",
+            [[]],  # se pueden añadir filtros si se desea limitar la consulta
+            {"fields": ["id", "name", "default_code", "list_price", "qty_available"]},
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error consultando Odoo: {e}")
+
+    resultados = []
+
+    for prod in productos_odoo:
+        reference = prod.get("default_code")
+        price = float(prod.get("list_price") or 0)
+        stock = prod.get("qty_available") or 0
+
+        # reglas de exclusión
+        if not reference:
+            continue
+        if price == 0 and stock == 0:
+            continue
+
+        try:
+            # la función ya maneja existencia/actualización y validaciones
+            creado = crear_producto_por_referencia(reference)
+            resultados.append(creado)
+        except HTTPException as httpe:
+            # si hay un error específico de un producto podemos continuar
+            # (podría guardarse en un log o en una lista de errores)
+            continue
+        except Exception:
+            # ignorar cualquier otra excepción individual
+            continue
+
+    return {"total": len(resultados), "data": resultados}
